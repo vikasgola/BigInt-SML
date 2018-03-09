@@ -15,7 +15,7 @@ signature BIGNAT =
         val succ : bignat -> bignat             (* done *)
         val min : bignat * bignat -> bignat     (* done *)
         val max : bignat * bignat -> bignat     (* done *)
-        val ** : bignat * bignat -> bignat      (*partically*)
+        val ** : bignat * bignat -> bignat      (* done *)
         val compare : bignat * bignat -> order  (* done *)
         val << : bignat * bignat -> bool        (* done *)
         val <<= : bignat * bignat -> bool       (* done *)
@@ -31,8 +31,8 @@ signature BIGNAT =
         val lenEq : bignat * bignat -> bool         (* done *)
         val -- : bignat * bignat -> bignat          (* done *)
         val pred : bignat -> bignat                 (* done *)
-        (* val %% : bignat * bignat -> bignat * bignat
-        val quo : bignat * bignat -> bignat
+         val %% : bignat * bignat -> bignat * bignat
+        (*val quo : bignat * bignat -> bignat
         val rem : bignat * bignat -> bignat *)
 end
 
@@ -193,6 +193,7 @@ structure Bignat:BIGNAT =
                                                             then normalize(start(substring(a,0,size(n)-1),substring(b,0,size(n)-1), 0 ));
         end *)
 
+
         (* only for positives *)
 
         local
@@ -250,8 +251,8 @@ structure Bignat:BIGNAT =
                 | mul(a,b,c) =  if(su(List.last(a),b) < 10) then 
                                         if(c = "0") then mul( List.take(a,length(a)-1 ) , b , c)^(Int.toString(su(List.last(a),b)) )
                                         else if( (Int.toString(su(List.last(a),b)) ++ c) << "10") then mul( List.take(a,length(a)-1 ) , b , "0")^(Int.toString(su(List.last(a),b)) ++ c )
-                                        else mul( List.take(a,length(a)-1 ) , b , substring(Int.toString(su(List.last(a),b)) ++ c , 0 , 1 )  )^( substring(Int.toString(su(List.last(a),b)) ++ c , 1 , 2 )  )
-                                else mul( List.take(a,length(a)-1 ) , b , substring(Int.toString(su(List.last(a),b)) ++ c , 0 , 1 )  )^( substring(Int.toString(su(List.last(a),b)) ++ c , 1 , 2 )  );
+                                        else mul( List.take(a,length(a)-1 ) , b , substring(Int.toString(su(List.last(a),b)) ++ c , 0 , 1 )  )^( substring(Int.toString(su(List.last(a),b)) ++ c , 1 , 1 )  )
+                                else mul( List.take(a,length(a)-1 ) , b , substring(Int.toString(su(List.last(a),b)) ++ c , 0 , 1 )  )^( substring(Int.toString(su(List.last(a),b)) ++ c , 1 , 1 )  );
 
             fun start(a , [] ) = "0"
                 |  start([] , b) = "0"
@@ -262,6 +263,9 @@ structure Bignat:BIGNAT =
                                                 else normalize(start(toList(a),toList(b)))
         end
 
+        infix %%;
+        fun op %% (a: bignat, b: bignat) = (a, b);
+
 end
 open Bignat;
     infix ==;
@@ -271,6 +275,7 @@ open Bignat;
     infix >>=;
     infix ++;
     infix --;
-    infix **
+    infix **;
+    infix %%
 
 

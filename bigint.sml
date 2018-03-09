@@ -18,7 +18,7 @@ val min : bigint * bigint -> bigint         (* done *)
 val max : bigint * bigint -> bigint         (* done *)
 val sign : bigint -> int                    (* done *)
 val sameSign : bigint * bigint -> bool      (* done *)
-(* val ** : bigint * bigint -> bigint *)
+val ** : bigint * bigint -> bigint          (* done *)
 val compare : bigint * bigint -> Bn.order      (* done *)
 val << : bigint * bigint -> bool            (* done *)
 val <<= : bigint * bigint -> bool           (* done *)
@@ -32,7 +32,7 @@ val lenLeq : bigint * bigint -> bool        (* done *)
 val lenGt : bigint * bigint -> bool         (* done *)
 val lenGeq : bigint * bigint -> bool        (* done *)
 val lenEq : bigint * bigint -> bool         
-(* val -- : bigint * bigint -> bigint *)
+val -- : bigint * bigint -> bigint
 val pred : bigint -> bigint                 (*done*) 
  (* val %% : bigint * bigint -> bigint * bigint
 val div : bigint * bigint -> bigint
@@ -125,12 +125,19 @@ struct
     infix --;
     fun op --(a: bigint, b: bigint): bigint = if(substring(toString(b),0,1) <> "-") then a ++(fromString("-"^toString(b)))
                                                 else a ++ fromString(substring(toString(b),1,size(toString(b))-1));
+
+    infix **;
+    fun op **(a:bigint, b:bigint) : bigint = if(substring(toString(b),0,1) <> "-" andalso substring(toString(a),0,1) <> "-") then fromString(Bn.toString(Bn.**(a,b)))
+                                                else if(substring(toString(b),0,1) = "-" andalso substring(toString(a),0,1) = "-") then (fromString(substring(toString(a),1,len(a) ))  ** fromString(substring(toString(b),1,len(b) )))
+                                                else if(substring(toString(a),0,1) = "-") then ~~(fromString(substring(toString(a),1,len(a)))  ** b)
+                                                else ~~(fromString(substring(toString(b),1,len(b) ))  ** a)
 end
 
 structure Bigint = BigInt(Bignat);
 
 open Bigint;
 infix ++;
-infix --
+infix --;
+infix **
 
 
