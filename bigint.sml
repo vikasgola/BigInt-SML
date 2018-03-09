@@ -31,8 +31,8 @@ val lenLt : bigint * bigint -> bool         (* done *)
 val lenLeq : bigint * bigint -> bool        (* done *)
 val lenGt : bigint * bigint -> bool         (* done *)
 val lenGeq : bigint * bigint -> bool        (* done *)
-val lenEq : bigint * bigint -> bool         
-val -- : bigint * bigint -> bigint
+val lenEq : bigint * bigint -> bool         (* done *)
+val -- : bigint * bigint -> bigint          (* done *)
 val pred : bigint -> bigint                 (*done*) 
  (* val %% : bigint * bigint -> bigint * bigint
 val div : bigint * bigint -> bigint
